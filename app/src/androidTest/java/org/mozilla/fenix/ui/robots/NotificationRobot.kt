@@ -8,6 +8,7 @@ import androidx.test.uiautomator.Until
 import org.junit.Assert.assertFalse
 import org.junit.Assert.assertTrue
 import org.mozilla.fenix.helpers.TestAssetHelper.waitingTime
+import org.mozilla.fenix.helpers.TestHelper
 import org.mozilla.fenix.helpers.ext.waitNotNull
 
 class NotificationRobot {
@@ -67,7 +68,8 @@ class NotificationRobot {
 
         fun clickClosePrivateTabsNotification(interact: HomeScreenRobot.() -> Unit): HomeScreenRobot.Transition {
             NotificationRobot().verifySystemNotificationExists("Close private tabs")
-            closePrivateTabsNotification().clickAndWaitForNewWindow()
+            closePrivateTabsNotification().click()
+            mDevice.findObject(UiSelector().packageName(TestHelper.packageName)).waitForExists(waitingTime)
 
             HomeScreenRobot().interact()
             return HomeScreenRobot.Transition()
